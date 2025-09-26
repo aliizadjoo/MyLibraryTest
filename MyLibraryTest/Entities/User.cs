@@ -9,7 +9,7 @@ namespace MyLibraryTest.Entities
 {
     public class User 
     {
-        public User()
+        private User()
         {
             
         }
@@ -23,6 +23,7 @@ namespace MyLibraryTest.Entities
         public string Username { get; set; }
         private string Password { get; set; }
 
+        public List<Review> Reviews { get; set; } = [];
         public RoleEnum Role { get; set; }
         public List<BorrowedBook> BorrowedBooks { get; set; } = [];
 

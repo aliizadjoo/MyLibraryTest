@@ -108,5 +108,85 @@ namespace MyLibraryTest.Services
             }
         
         }
+
+        public void AddReview(Review review) 
+        {
+          using(var _context = new AppDbContext())
+          {
+             _context.Reviews.Add(review);
+             _context.SaveChanges();
+          }
+        }
+
+        public void UpdateReview(Review review) 
+        {
+            using (var _context = new AppDbContext()) 
+            {
+                _context.Reviews.Update(review);
+                _context.SaveChanges();              
+            }
+        }
+
+        public void RemoveReview(Review review) 
+        {
+           using(var _context = new AppDbContext()) 
+           {
+              _context.Reviews.Remove(review);
+              _context.SaveChanges();
+           } 
+        }
+
+        public List<Review> GetReviewsByUserId(int userId) 
+        {
+            using (var _context = new AppDbContext()) 
+            {
+               return _context.Reviews.Where(r=>r.UserId==userId)
+                    .Include(r=>r.Book).ToList();   
+
+            }
+
+
+        } 
+
+        public Review? GetReviewsByReviewId(int reviewId) 
+        {
+           using(var _context = new AppDbContext()) 
+           {
+               return _context.Reviews.FirstOrDefault(r => r.Id == reviewId);
+           }
+        }
+
+        public Book? GetBookWithApprovedReviews(int bookId)
+        {
+            using (var _context = new AppDbContext())
+            {
+                return _context.Books
+                    .Include(b => b.Category) 
+                    .Include(b => b.Reviews)
+                        .ThenInclude(r => r.User) 
+                    .FirstOrDefault(b => b.Id == bookId);
+            }
+        }
+
+        public List<Review> GetPendingReviews()
+        {
+            using (var _context = new AppDbContext())
+            {
+                
+                return _context.Reviews
+                    .Where(r => !r.IsApproved)
+                    .Include(r => r.Book)      
+                    .Include(r => r.User)     
+                    .ToList();
+            }
+        }
+
+        public Review GetReviewById(int reviewId)
+        {
+            using (var _context = new AppDbContext())
+            {
+                return _context.Reviews.FirstOrDefault(r => r.Id == reviewId);
+            }
+        }
     }
 }

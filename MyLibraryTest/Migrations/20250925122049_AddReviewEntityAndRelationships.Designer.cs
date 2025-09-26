@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibraryTest.DataAccess;
 
@@ -11,9 +12,11 @@ using MyLibraryTest.DataAccess;
 namespace MyLibraryTest.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250925122049_AddReviewEntityAndRelationships")]
+    partial class AddReviewEntityAndRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace MyLibraryTest.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("MyLibraryTest.Entities.BorrowedBook", b =>
@@ -68,7 +71,7 @@ namespace MyLibraryTest.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BorrowedBooks", (string)null);
+                    b.ToTable("BorrowedBooks");
                 });
 
             modelBuilder.Entity("MyLibraryTest.Entities.Category", b =>
@@ -86,7 +89,7 @@ namespace MyLibraryTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("MyLibraryTest.Entities.Review", b =>
@@ -123,7 +126,7 @@ namespace MyLibraryTest.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("MyLibraryTest.Entities.User", b =>
@@ -148,7 +151,7 @@ namespace MyLibraryTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MyLibraryTest.Entities.Book", b =>
